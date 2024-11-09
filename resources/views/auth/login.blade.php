@@ -31,6 +31,7 @@
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
+        <a href="{{route("register")}}">Register</a>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
@@ -38,7 +39,6 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

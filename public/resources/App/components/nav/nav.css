@@ -1,0 +1,166 @@
+.navegation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+
+    .icon_title {
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+
+            text-decoration: none;
+    
+
+            img {
+                width: 70px;
+                height: 70px;
+            }
+
+            h1 {
+                font-size: 30px;
+                color: #666;
+            }
+
+        }
+
+
+    }
+
+
+
+    .links{
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    
+        .login {
+    
+    
+            a {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                text-decoration: none;
+                font-size: 20px;
+                font-weight: bolder;
+                color: #666;
+                gap: 5px;
+            }
+    
+        }
+        
+    
+        .btn_option_users{
+           display: flex;
+           flex-direction: row;
+           gap: 10px;
+           align-items: center;
+           cursor: pointer;
+           font-size: 20px;
+           font-weight: bolder;
+           color: #666;
+           
+        }
+
+
+        .select_option_users{
+
+          
+
+            position: absolute;
+            top: 70px;
+            right: 50px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            background: linear-gradient(30deg,rgba(255, 145, 0, 0.315),rgba(255, 6, 6, 0.24)); /* Fondo blanco semitransparente */
+            backdrop-filter: blur(10px); /* Efecto de desenfoque */
+            -webkit-backdrop-filter: blur(10px); /* Soporte para Safari */
+            border-radius: 10px; /* Bordes redondeados */
+            border: 1px solid rgba(255, 139, 7, 0.199); /* Borde con transparencia */
+            padding: 20px; /* Espacio interno */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+
+            .option{
+
+                
+
+                form{
+
+                    input{
+                        border: none;
+                        outline: none;
+                        background-color: transparent;
+                        color: white;
+                        font-size: 20px;
+                        transition: all 0.5s;
+                        &:hover{
+                            font-size: 25px;
+                            
+                        }
+                    }
+
+                
+                }
+
+                a{
+                    font-size: 20px;
+                    text-decoration: none;
+                    color: white;
+                    transition: all 0.5s;
+                    &:hover{
+                        
+                        font-size: 25px;
+                    }
+                    
+                }
+
+                
+            }
+        }
+
+        .money{
+          
+           a{
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bolder;
+            color: #666;
+           }
+        }
+
+        .shop{
+            display: flex;
+            flex-direction: row;
+            color: #666;
+            font-size: 20px;
+            font-weight: bolder;
+            align-items: center;
+            
+        }
+
+        .hidden{
+            display: none;
+        }
+    }
+
+}

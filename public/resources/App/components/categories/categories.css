@@ -1,0 +1,37 @@
+.categories{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: scroll;
+    scrollbar-width: none;
+    padding: 20px 10px;
+
+    a{
+        display: block;
+        
+        background: linear-gradient(30deg,rgba(255, 102, 0, 0.712),rgba(255, 15, 15, 0.24)); /* Fondo blanco semitransparente */
+        backdrop-filter: blur(10px); /* Efecto de desenfoque */
+        -webkit-backdrop-filter: blur(10px); /* Soporte para Safari */
+        border-radius: 10px; /* Bordes redondeados */
+        border: 3px solid rgba(255, 210, 159, 0.199); /* Borde con transparencia */
+        padding: 15px 0px; /* Espacio interno */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+
+        color: white;
+        font-size: 15px;
+        font-weight: bolder;
+        text-decoration: none;
+        text-align: center;
+
+        transition: all 1s;
+
+        &:hover{
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+    }
+}

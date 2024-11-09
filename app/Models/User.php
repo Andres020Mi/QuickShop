@@ -45,4 +45,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+      // Relación con productos (un usuario puede tener muchos productos)
+      public function products()
+      {
+          return $this->hasMany(Product::class);
+      }
+  
+      // Relación con órdenes (un usuario puede tener muchas órdenes)
+      public function orders()
+      {
+          return $this->hasMany(Order::class);
+      }
+  
+      // Relación con direcciones de envío (un usuario puede tener muchas direcciones)
+      public function shippingAddresses()
+      {
+          return $this->hasMany(ShippingAddress::class);
+      }
+
 }
