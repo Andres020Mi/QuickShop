@@ -37,10 +37,11 @@ class Product extends Model
     }
 
     // Relación con imágenes (un producto puede tener muchas imágenes)
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
+    // En el modelo Product
+    public function productImages()
+{
+    return $this->hasMany(ProductImage::class);
+}
 
     // Relación con elementos de órdenes (un producto puede estar en muchos elementos de órdenes)
     public function orderItems()

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
@@ -14,8 +15,13 @@ class SellerController extends Controller
      */
     public function index()
     {
-        return view("App.modules.Sellers.products.index");
-    }
+        $user_id = Auth::User()->id;
+
+        // Cargar productos con las imágenes asociadas usando eager loading
+        $products_user = Product::where('user_id', $user_id)->with('productImages')->get();
+        
+        return view('App.modules.Sellers.products.index', compact('products_user'));
+     }
 
     /**
      * Show the form for creating a new resource.

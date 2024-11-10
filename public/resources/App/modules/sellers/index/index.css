@@ -1,0 +1,28 @@
+.contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+    height: 100%;
+    margin: auto;
+
+    h2 {
+        font-size: 50px;
+        font-weight: bolder;
+        color: #666;
+    }
+
+    a {
+        background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+        display: block;
+        text-decoration: none;
+        width: min-content;
+        height: min-content;
+        padding: 10px;
+        color: white;
+        font-size: 20px;
+        border-radius: 5px;
+        white-space: nowrap;
+    }
+
+}

@@ -1,15 +1,146 @@
-.contenido{
+.contenido {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 70%;
+    height: 100%;
+    margin: auto;
 
-    h2{
+    h2 {
         font-size: 50px;
         font-weight: bolder;
         color: #666;
     }
 
-    a{
-        background: linear-gradient(30deg,rgba(255, 153, 0, 0.377),rgba(255, 0, 0, 0.308));
+    a {
+        background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+        display: block;
+        text-decoration: none;
+        width: min-content;
+        height: min-content;
+        padding: 10px;
+        color: white;
+        font-size: 20px;
+        border-radius: 5px;
     }
+
+    form {
+
+
+        background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+        border-radius: 10px;
+        padding: 10px;
+
+        width: 100%;
+        height: 400px;
+
+
+        display: grid;
+        grid-template-columns: 50% 50%;
+        gap: 10px;
+
+
+        select {
+            background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+            border-radius: 5px;
+            padding: 10px;
+            outline: none;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Añadido un borde suave */
+            color: white;
+            font-size: 15px;
+            font-weight: bolder;
+            appearance: none; /* Para quitar el estilo predeterminado del sistema */
+            -webkit-appearance: none; /* Para Webkit (Chrome, Safari) */
+            -moz-appearance: none; /* Para Firefox */
+        }
+        
+        select:focus {
+            border-color: rgba(255, 255, 255, 0.7); /* Asegura que el borde cambie cuando esté enfocado */
+        }
+        
+        select option {
+            background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+            color: white; /* Color blanco para el texto */
+        }
+        
+        /* Estilo adicional para las opciones cuando el select tiene el foco */
+        select:focus option {
+            background: #333;
+        }
+        
+        button{
+            background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+            display: block;
+            text-decoration: none;
+            width: min-content;
+            height: min-content;
+            padding: 10px;
+            color: white;
+            font-size: 20px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            white-space: nowrap;
+               
+        }
+
+        .informacion_producto {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            overflow: scroll;
+            scrollbar-width: none;
+
+
+            width: 100%;
+            height: 100%;
+
+            label {
+                font-size: 20px;
+                font-weight: bolder;
+                color: white;
+            }
+
+            input {
+                background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+                border-radius: 5px;
+                padding: 10px;
+                outline: none;
+                border: none;
+                color: white;
+                font-size: 15px;
+                font-weight: bolder;
+            }
+
+            textarea {
+
+                color: white;
+                font-size: 20px;
+                font-weight: bolder;
+                background: linear-gradient(30deg, rgba(255, 153, 0, 0.377), rgba(255, 0, 0, 0.308));
+                border-radius: 5px;
+                outline: none;
+                border: none;
+                scrollbar-width: none;
+                padding: 30px;
+            }
+
+        }
+
+        .foto_produco{
+
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+
+            img{
+                width: 250px;
+                height: 250px;
+                border-radius: 10px;
+            }
+
+        }
+    }
+
 }
