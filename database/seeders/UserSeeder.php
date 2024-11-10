@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'seller',
                 'email' => 'seller@gmail.com',
-                'password' => Hash::make('seller23'),
+                'password' => Hash::make('seller123'),
                 'role' => 'seller',
                
             ],

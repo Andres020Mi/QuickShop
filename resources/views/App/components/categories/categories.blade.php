@@ -1,74 +1,12 @@
 <div class="categories">
+    @forelse ($categories  as $category )
+    <a href="/?c={{$category->id}}">
+        {{$category->name}}
+    </a>     
+    @empty
     <a href="">
-        Categorie
+        sin categorias
     </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie Categorie Caasdasd asdasd asdtegorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
-    <a href="">
-        Categorie
-    </a>
+    @endforelse
+   
 </div>
