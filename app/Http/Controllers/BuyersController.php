@@ -16,21 +16,19 @@ class BuyersController extends Controller
         
         // Obtener todas las categorias
         $categories = Category::all();
+       
 
-        // 
         $categoryIdUrl = request()->query("c");
         
 
-        // if($categoryIdUrl){
-        //     $products = Product::where("category_id",$categoryIdUrl)->get(); 
-        // } else{
-        //     $products = Product::where("category_id",1)->get();
-        // }
-
-        // Eliminar cunado se tengan productos registrados
-        $products = Product::all();
-
-
+        if($categoryIdUrl){
+            $products = Product::where("category_id",$categoryIdUrl)->with('productImages')->get(); 
+        } else{
+            $products = Product::where("category_id",1)->with('productImages')->get();
+        }
+      
+        
+        
         return view("App.modules.Buyers.index",compact("products","categories"));
     }
 

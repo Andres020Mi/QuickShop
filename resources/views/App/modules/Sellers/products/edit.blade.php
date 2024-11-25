@@ -1,7 +1,7 @@
 @extends('App.layouts.app')
 
 @section('title')
-    Create product
+    Editar product
 @endsection
 
 
@@ -13,11 +13,12 @@
     <div class="contenido">
 
         <h2>Formulario de Producto</h2>
+       
         <a href="{{ route('seller.products.index') }}">Cancelar</a>
-        <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('seller.products.update',$product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            @method("post")
+            @method("put")
             <input hidden type="text" name="user_id" value="{{ Auth::User()->id }}">
 
             <div class="informacion_producto">
@@ -26,22 +27,25 @@
                 <label for="category_id">Categoría:</label>
                 <select name="category_id" id="category_id" required>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                    
                     @endforeach
                 </select>
 
 
                 <label for="name">Nombre del Producto:</label>
-                <input type="text" name="name" id="name" required>
+                <input type="text" name="name" id="name" value="{{$product->name}}" required>
 
                 <label for="description">Descripción:</label>
-                <textarea name="description" id="description" required></textarea>
+                <textarea name="description" id="description" required>{{$product->description}}</textarea>
 
                 <label for="price">Precio:</label>
-                <input type="number" name="price" id="price" step="0.01" required>
+                <input type="number" name="price" id="price" value="{{$product->price}}"  step="0.01" required>
 
                 <label for="stock">Stock:</label>
-                <input type="number" name="stock" id="stock" required>
+                <input type="number" name="stock" id="stock" value="{{$product->stock}}"  required>
 
 
             </div>
@@ -55,18 +59,21 @@
                     </svg>
                     
                 </label>
-                <input hidden type="file" name="image" id="image" accept="image/*" required>
+                <input hidden type="file" name="image" id="image" accept="image/*" value="{{$image[0]->image_path}}">
 
-                <img id="preview-image" src="#" alt="Vista previa de la imagen"
-                    style="display: none; ">
+           
+                <img id="preview-image" name="image" src="{{ asset('storage/' . $image[0]->image_path ) }}" alt="Vista previa de la imagen">
+                
 
-            </div>
+            </div>  
 
 
 
-            <button type="submit">Crear Producto</button>
+            <button type="submit">Editar Producto</button>
         </form>
     </div>
+
+    
 
     <script>
 
@@ -90,4 +97,5 @@
             }
         });
     </script>
+    
 @endsection

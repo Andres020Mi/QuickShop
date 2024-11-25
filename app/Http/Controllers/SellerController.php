@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,9 +20,10 @@ class SellerController extends Controller
 
         // Cargar productos con las imágenes asociadas usando eager loading
         $products_user = Product::where('user_id', $user_id)->with('productImages')->get();
-        
-        return view('App.modules.Sellers.products.index', compact('products_user'));
-     }
+      
+        $categories = Category::all();
+        return view('App.modules.Sellers.products.index', compact('products_user', 'categories'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +31,7 @@ class SellerController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view("App.modules.Sellers.products.create",compact("categories"));
+        return view("App.modules.Sellers.products.create", compact("categories"));
     }
 
     /**
@@ -45,7 +47,7 @@ class SellerController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de imagen
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif', // Validación de imagen
         ]);
 
         // Crear el producto
@@ -87,7 +89,11 @@ class SellerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Category::all();
+        $product = Product::find($id);
+        $image = ProductImage::where("product_id", $product->id)->get();
+        
+        return view("App.modules.Sellers.products.edit", compact("categories", "product", "image"));
     }
 
     /**
@@ -95,14 +101,91 @@ class SellerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validar los datos recibidos del formulario
+
+        $product = Product::find($id);
+
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->save();
+
+
+          // Si se ha subido una imagen, procesarla
+          if ($request->hasFile('image')) {
+
+
+               // Buscar el producto por ID, incluyendo sus imágenes
+        $product = Product::with('productImages')->findOrFail($id);
+
+        // Verificar si el producto pertenece al usuario autenticado
+        if ($product->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para editar este producto.');
+        }
+
+        // Eliminar las imágenes asociadas
+        foreach ($product->productImages as $image) {
+            // Eliminar físicamente la imagen del almacenamiento usando unlink
+            $imagePath = storage_path('app/public/' . $image->image_path);
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath); // Elimina la imagen del sistema de archivos
+            }
+
+            // Eliminar la imagen de la base de datos
+            $image->delete();
+        }
+
+
+            // Subir la imagen al almacenamiento
+            $imagePath = $request->file('image')->store('product_images', 'public'); // Guardado en 'storage/app/public/product_images'
+
+            // Guardar la ruta de la imagen en la tabla product_images
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image_path' => $imagePath,
+            ]);
+        }
+
+
+     
+      
+
+        return redirect()->route('seller.products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Buscar el producto por ID, incluyendo sus imágenes
+        $product = Product::with('productImages')->findOrFail($id);
+
+        // Verificar si el producto pertenece al usuario autenticado
+        if ($product->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para eliminar este producto.');
+        }
+
+        // Eliminar las imágenes asociadas
+        foreach ($product->productImages as $image) {
+            // Eliminar físicamente la imagen del almacenamiento usando unlink
+            $imagePath = storage_path('app/public/' . $image->image_path);
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath); // Elimina la imagen del sistema de archivos
+            }
+
+            // Eliminar la imagen de la base de datos
+            $image->delete();
+        }
+
+        // Eliminar el producto
+        $product->delete();
+
+        // Redirigir a la lista de productos con un mensaje de éxito
+        return redirect()->route('seller.products.index')->with('success', 'Producto eliminado correctamente.');
     }
 }

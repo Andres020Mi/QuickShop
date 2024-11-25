@@ -2,4 +2,79 @@
     
     width: 100%;
     height: 100%;
+
+    padding-bottom: 100px;
+    padding-top: 25px;
+
+    overflow: scroll;
+    scrollbar-width: none;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+
+    .product{
+        background: linear-gradient(30deg, rgba(255, 102, 0, 0.377), rgba(255, 0, 0, 0.308));
+        border: 2px solid rgba(255, 102, 0, 0.377);
+        width: 300px;
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        overflow: hidden;
+        border-radius: 10px;
+        .img_start{
+            img{
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        .informacion{
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            gap: 20px;
+            .nombre_producto{
+                font-size: 20px;
+                color: white;
+                font-weight: bolder;
+            }
+
+            .precio{
+                font-size: 20px;
+                color: white;
+                font-weight: bold;
+            }
+
+            .opciones{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .agregar_carrito{
+                    display: block;
+                    background: linear-gradient(30deg, rgba(255, 102, 0, 0.377), rgba(255, 0, 0, 0.308));
+                    border-radius: 100%;
+                    padding: 10px;
+                }
+
+                .mas_informacion{
+                    width: min-content;
+                    height: min-content;
+                    white-space: nowrap;
+                    display: block;
+                    background: linear-gradient(30deg, rgba(255, 102, 0, 0.377), rgba(255, 0, 0, 0.308));
+                    border-radius: 10px;
+                    padding: 10px;
+                    font-size: 20px;
+                    font-weight:bolder;
+                    text-decoration: none;
+                    color: white;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
 }
