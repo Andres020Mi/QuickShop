@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
@@ -22,7 +24,26 @@ class SellerController extends Controller
         $products_user = Product::where('user_id', $user_id)->with('productImages')->get();
       
         $categories = Category::all();
-        return view('App.modules.Sellers.products.index', compact('products_user', 'categories'));
+
+        $List_products_shop = Session::get('List_products_shop', []);
+        $cart_count = count($List_products_shop);
+        // Crear un array con los productos y sus imagenes para poder colocar eso en el listado de carrito de compras
+        if ($cart_count > 0) {
+            $cartProducts = Product::whereIn('id', $List_products_shop)
+                ->with('productImages') // Obtener imágenes asociadas
+                ->get();
+        }else{
+            $cartProducts = [];     
+              
+        }
+
+        
+        $precioTotal = 0;
+        foreach($cartProducts as $product){
+            $precioTotal+=$product->price;
+        }
+
+        return view('App.modules.Sellers.products.index', compact('products_user', 'categories',"cartProducts","cart_count","precioTotal"));
     }
 
     /**
@@ -31,7 +52,24 @@ class SellerController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view("App.modules.Sellers.products.create", compact("categories"));
+
+        $List_products_shop = Session::get('List_products_shop', []);
+        $cart_count = count($List_products_shop);
+        // Crear un array con los productos y sus imagenes para poder colocar eso en el listado de carrito de compras
+        if ($cart_count > 0) {
+            $cartProducts = Product::whereIn('id', $List_products_shop)
+                ->with('productImages') // Obtener imágenes asociadas
+                ->get();
+        }else{
+            $cartProducts = [];     
+              
+        }
+
+        $precioTotal = 0;
+        foreach($cartProducts as $product){
+            $precioTotal+=$product->price;
+        }
+        return view("App.modules.Sellers.products.create", compact("categories","cartProducts","cart_count","precioTotal"));
     }
 
     /**
@@ -92,8 +130,25 @@ class SellerController extends Controller
         $categories = Category::all();
         $product = Product::find($id);
         $image = ProductImage::where("product_id", $product->id)->get();
+
+        $List_products_shop = Session::get('List_products_shop', []);
+        $cart_count = count($List_products_shop);
+        // Crear un array con los productos y sus imagenes para poder colocar eso en el listado de carrito de compras
+        if ($cart_count > 0) {
+            $cartProducts = Product::whereIn('id', $List_products_shop)
+                ->with('productImages') // Obtener imágenes asociadas
+                ->get();
+        }else{
+            $cartProducts = [];     
+              
+        }
         
-        return view("App.modules.Sellers.products.edit", compact("categories", "product", "image"));
+        $precioTotal = 0;
+        foreach($cartProducts as $product){
+            $precioTotal+=$product->price;
+        }
+
+        return view("App.modules.Sellers.products.edit", compact("categories", "product", "image","cartProducts","cart_count","precioTotal"));
     }
 
     /**

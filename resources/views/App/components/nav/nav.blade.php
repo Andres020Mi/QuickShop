@@ -10,9 +10,10 @@
     <div class="links">
         @auth
 
+
             <div class="shop" id="btn_option_shop">
                 <span>
-                    0
+                    {{ $cart_count }}
                 </span>
                 <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#ff832d">
                     <path
@@ -21,16 +22,52 @@
             </div>
 
 
-            <div class="select_option_shop" id="select_option_shop">
-                <div class="option">
+            <div class="select_option_shop hidden" id="select_option_shop">
+                @forelse ($cartProducts as $cartProduct)
+                    <div class="option">
+                        <div class="name">
+                            {{ $cartProduct->name }}
+                        </div>
+                        <div class="name">
+                            ${{ $cartProduct->price }}
+                        </div>
+                        <div class="img">
+                            <img src="{{ asset('storage/' . $cartProduct->productImages[0]->image_path) }}" alt="img">
+                        </div>
+                        <div class="eliminar">
+                            <a href="{{ route('eliminar_cart_shop', ['id' => $cartProduct->id]) }}">Eliminar</a>
+                        </div>
 
+                    </div>
+                @empty
+                    <div class="option">
+                        <div class="name">
+                            No hay productos
+                        </div>
+                    </div>
+                @endforelse
+                @if ($cart_count > 0)
+                <div class="option">
+                    
+                <div class="comprar">
+                    <a href="">
+                        Comporar
+                    </a>
                 </div>
+                <div class="option">
+                    <div class="name">
+                        Precio total ${{ $precioTotal }}
+                    </div>
+                </div>
+                </div>
+                    
+                @endif
             </div>
 
 
             <div class="money">
-                <a>
-                    <span>${{Auth::User()->money}}</span>
+                <a href="{{ route('money.index') }}">
+                    <span>${{ Auth::User()->money }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
                         fill="#ff832d">
                         <path
@@ -66,7 +103,7 @@
 
                 @if (Auth::User()->role == 'seller' || Auth::User()->role == 'admin')
                     <div class="option">
-                        <a href="{{route('seller.products.index')}}">Tus productos</a>
+                        <a href="{{ route('seller.products.index') }}">Tus productos</a>
                     </div>
                 @endif
 

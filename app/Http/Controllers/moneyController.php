@@ -1,33 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Session;
-use App\Models\Category;
+
 use App\Models\Product;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class BuyersController extends Controller
+class moneyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        
-        // Obtener todas las categorias
-        $categories = Category::all();
-       
-
-        $categoryIdUrl = request()->query("c");
-        
-
-        if($categoryIdUrl){
-            $products = Product::where("category_id",$categoryIdUrl)->with('productImages')->get(); 
-        } else{
-            $products = Product::where("category_id",1)->with('productImages')->get();
-        }
-      
-        
+    {
         $List_products_shop = Session::get('List_products_shop', []);
         $cart_count = count($List_products_shop);
         // Crear un array con los productos y sus imagenes para poder colocar eso en el listado de carrito de compras
@@ -37,7 +23,7 @@ class BuyersController extends Controller
                 ->get();
         }else{
             $cartProducts = [];     
-            $cart_count = 0;  
+              
         }
 
         $precioTotal = 0;
@@ -45,8 +31,38 @@ class BuyersController extends Controller
             $precioTotal+=$product->price;
         }
         
-        return view("App.modules.Buyers.index",compact("products","categories","cart_count","cartProducts","precioTotal"));
+        return view("App.modules.money.index",compact("cartProducts","cart_count","precioTotal"));
     }
+
+
+    public function deposit_money(Request $request)
+    {
+        
+        $money = $request->cantidad;
+        $user =  User::find(auth()->id());
+        $user->money = $user->money + $money;
+        $user->save();
+        $user =  User::find(auth()->id());
+        return redirect()->route("buyers.index");
+    }
+
+    
+    public function withdraw_money(Request $request)
+    {
+        $money = $request->cantidad;
+        $user =  User::find(auth()->id());
+         if($user->money - $money < 0 ){
+            
+            return redirect()->route("buyers.index");
+         } 
+         $user->money = $user->money - $money;
+         $user->save();
+        $user =  User::find(auth()->id());
+        return redirect()->route("buyers.index");
+        
+    }
+    
+
 
     /**
      * Show the form for creating a new resource.

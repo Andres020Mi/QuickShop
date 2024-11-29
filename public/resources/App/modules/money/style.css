@@ -1,0 +1,70 @@
+.contenido{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .card{
+        width: 500px;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+        background: linear-gradient(30deg, rgba(255, 102, 0, 0.377), rgba(255, 0, 0, 0.308));
+        border: 2px solid rgba(255, 102, 0, 0.377);
+        border-radius: 10px;
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            input{
+                width: 200px;
+                height: 50px;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+        }
+
+        .retirar{
+
+            input[type="submit"]{
+                background: linear-gradient(30deg, rgba(255, 0, 0, 0.377), rgba(154, 86, 86, 0.308));
+                font-size: 20px;
+                font-weight: bolder;
+                color: white;
+            }
+            input[type="number"]{
+               background: linear-gradient(30deg, rgba(255, 0, 0, 0.377), rgba(154, 86, 86, 0.308));
+               height: 30px;
+               font-size: 20px;
+               font-weight: bolder;
+               color: white;
+               padding: 20px;
+            }
+        }
+
+
+        .agregar{
+
+            input[type="submit"]{
+                background: linear-gradient(30deg, rgba(55, 255, 0, 0.377), rgba(93, 154, 86, 0.308));
+                font-size: 20px;
+                font-weight: bolder;
+                color: white;
+            }
+            input[type="number"]{
+                background: linear-gradient(30deg, rgba(55, 255, 0, 0.377), rgba(93, 154, 86, 0.308));
+               height: 30px;
+               font-size: 20px;
+               font-weight: bolder;
+               color: white;
+               padding: 20px;
+            }
+        }
+    }
+}

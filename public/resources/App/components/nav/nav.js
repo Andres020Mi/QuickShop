@@ -13,3 +13,19 @@ btn_option_users.addEventListener("click",function(){
     
     
 })
+
+
+let btn_option_shop = document.getElementById("btn_option_shop");
+
+btn_option_shop.addEventListener("click",function(){
+    let select_option_shop = document.getElementById("select_option_shop");
+
+    if(select_option_shop.classList.contains("hidden")){
+        select_option_shop.classList.remove("hidden")
+    }else{
+        select_option_shop.classList.add("hidden")
+    }
+    
+    
+
+})
