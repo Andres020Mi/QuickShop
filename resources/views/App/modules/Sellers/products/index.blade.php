@@ -89,7 +89,7 @@
 
                     <div class="col">
                         <p>
-                            {{ $product->price }}
+                           $ {{ $product->price }}
                         </p>
                     </div>
 

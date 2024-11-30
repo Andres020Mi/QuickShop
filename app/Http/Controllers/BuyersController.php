@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BuyersController extends Controller
@@ -51,48 +52,54 @@ class BuyersController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+
+// -----------------------------------------------------------------------------------
+
+public function getPurchaseHistory()
+{
+    // Obtener el usuario con sus órdenes, ítems de órdenes, productos y sus imágenes
+    $user = User::with(['orders.orderItems.product.productImages'])->findOrFail(auth()->id());
+    
+    // Mapear el historial de compras
+    $purchaseHistory = $user->orders->map(function ($order) {
+        return [
+            'order_id' => $order->id,
+            'status' => $order->status,
+            'total' => $order->total,
+            'created_at' => $order->created_at,
+            'items' => $order->orderItems->map(function ($item) {
+                return [
+                    'product_name' => $item->product->name,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                    'images' => $item->product->productImages->map(function ($image) {
+                        return $image->image_path; // Ruta de la imagen
+                    }),
+                ];
+            }),
+        ];
+    });
+
+    $List_products_shop = Session::get('List_products_shop', []);
+    $cart_count = count($List_products_shop);
+    // Crear un array con los productos y sus imagenes para poder colocar eso en el listado de carrito de compras
+    if ($cart_count > 0) {
+        $cartProducts = Product::whereIn('id', $List_products_shop)
+            ->with('productImages') // Obtener imágenes asociadas
+            ->get();
+    }else{
+        $cartProducts = [];     
+        $cart_count = 0;  
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    $precioTotal = 0;
+    foreach($cartProducts as $product){
+        $precioTotal+=$product->price;
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    // return $purchaseHistory;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // Retornar datos a la vista
+    return view("App.modules.Buyers.cartShop.index", compact('user', 'purchaseHistory', 'cartProducts', 'precioTotal', 'cart_count'));
+}
 }

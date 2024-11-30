@@ -50,7 +50,7 @@
                 <div class="option">
                     
                 <div class="comprar">
-                    <a href="">
+                    <a href="{{route('cart.shop')}}">
                         Comporar
                     </a>
                 </div>
@@ -109,7 +109,7 @@
 
 
                 <div class="option">
-                    <a href="">Compras</a>
+                    <a href="{{route('getPurchaseHistory')}}">Compras</a>
                 </div>
 
 
